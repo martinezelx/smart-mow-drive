@@ -118,13 +118,14 @@ public class MowerCLI implements CommandLineRunner {
             for (int x = 0; x < Integer.parseInt(terrainDimensions.split(" ")[0]); x++) {
                 int finalX = x;
                 int finalY = y;
-                var mowerAtPosition = mowersFinalPositions.stream()
-                        .filter(mower -> mower.getX() == finalX && mower.getY() == finalY)
-                        .findFirst();
+                var mowersAtPosition = mowersFinalPositions.stream()
+                        .filter(mower -> mower.getX() == finalX + 1 && mower.getY() == finalY + 1)
+                        .toList();
 
-                if (mowerAtPosition.isPresent()) {
-                    // Print the mower and its direction
-                    System.out.print("| " + getDirectionSymbol(Position.fromChar(mowerAtPosition.get().getPosition())) + " ");
+                if (!mowersAtPosition.isEmpty()) {
+                    for (var mower : mowersAtPosition) {
+                        System.out.print("| " + getDirectionSymbol(Position.fromChar(mower.getPosition())) + " ");
+                    }
                 } else {
                     // Print an empty cell
                     System.out.print("|   ");
