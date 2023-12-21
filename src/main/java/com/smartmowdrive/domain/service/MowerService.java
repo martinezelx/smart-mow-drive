@@ -6,20 +6,22 @@ import com.smartmowdrive.domain.constants.Status;
 import com.smartmowdrive.domain.exception.*;
 import com.smartmowdrive.domain.model.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @RequiredArgsConstructor
+@Slf4j
 @Service
 public class MowerService {
 
     public List<MowerFinalPosition> executeInstructions(InstructionsCommands request) {
-
+        log.info("Executing instructions");
         var mowersFinalPositions = new ArrayList<MowerFinalPosition>();
 
         validateTerrainDimensions(request.terrainDimensions());
-        validateMowerInstructionsUniqueness(request.mowersInstructions());
+        validateMowerInstructionsIdUniqueness(request.mowersInstructions());
 
         for (var mowerInstruction : request.mowersInstructions()) {
 
@@ -53,7 +55,7 @@ public class MowerService {
     }
 
     public MowerFinalPosition executeInstruction(UUID id, String terrainDimensions, String mowerPosition, String instructions, List<MowerFinalPosition> mowersFinalPositions) {
-
+        log.info("Executing instruction for mower with ID: {}", id);
         var dimensionsParts = terrainDimensions.split(" ");
         var width = Integer.parseInt(dimensionsParts[0]);
         var height = Integer.parseInt(dimensionsParts[1]);
@@ -80,17 +82,20 @@ public class MowerService {
                     }
                 });
 
+        log.info("Finished executing instruction for mower with ID: {}", id);
         return new MowerFinalPosition(mower.getX(), mower.getY(), mower.getPosition().getCoordinateCode(),
                 mower.isInErrorState() ? Status.ERROR : Status.SUCCESSFUL);
     }
 
     private void validateTerrainDimensions(String terrainDimensions) {
+        log.info("Validating terrain dimensions: {}", terrainDimensions);
         if (!RegexPatterns.TERRAIN_DIMENSIONS.matcher(terrainDimensions).matches()) {
             throw new InvalidDimensionsException(String.format("%s %s", ErrorMessages.INVALID_TERRAIN_FORMAT, terrainDimensions));
         }
     }
 
-    private void validateMowerInstructionsUniqueness(List<MowerInstructions> mowerInstructions) {
+    private void validateMowerInstructionsIdUniqueness(List<MowerInstructions> mowerInstructions) {
+        log.info("Validating mower instructions ID uniqueness");
         Set<UUID> uniqueIds = new HashSet<>();
         for (MowerInstructions instruction : mowerInstructions) {
             if (!uniqueIds.add(instruction.id())) {
@@ -100,12 +105,14 @@ public class MowerService {
     }
 
     private void validateMowerPosition(String mowerPosition) {
+        log.info("Validating mower position: {}", mowerPosition);
         if (!RegexPatterns.MOWER_POSITION.matcher(mowerPosition).matches()) {
             throw new InvalidPositionException(String.format("%s %s", ErrorMessages.INVALID_POSITION_FORMAT, mowerPosition));
         }
     }
 
     private void validateInstructions(String instructions) {
+        log.info("Validating instructions: {}", instructions);
         if (!RegexPatterns.INSTRUCTIONS.matcher(instructions).matches()) {
             throw new InvalidInstructionException(String.format("%s %s", ErrorMessages.INVALID_INSTRUCTIONS_FORMAT, instructions));
         }

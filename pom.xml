@@ -13,9 +13,10 @@
 
     <groupId>com.smartmowdrive</groupId>
     <artifactId>smart-mow-drive</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <name>smart-mow-drive</name>
-    <description>desc</description>
+    <description>SmartMowDrive is an advanced Java-based application that automates and optimizes
+        autonomous lawn mowers through a precise control API and efficient navigation system.</description>
 
     <properties>
         <java.version>21</java.version>
@@ -47,6 +48,7 @@
 
         <!-- Spring Boot Actuator -->
         <!-- http://localhost:8080/actuator/health -->
+        <!-- http://localhost:8080/actuator/metrics/mower.process.instructions -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
@@ -72,7 +74,6 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -94,6 +95,8 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.2</version>
                 <configuration>
+                    <!-- Enable dynamic agent loading,
+                    it's used to ensure that Lombok works correctly during the execution of tests. -->
                     <argLine>-XX:+EnableDynamicAgentLoading</argLine>
                 </configuration>
             </plugin>

@@ -1,7 +1,8 @@
 # Smart-Mow-Drive | SEAT:CODE Backend Challenge
 
 ## Description
-- SmartMowDrive is a state-of-the-art system designed to automate and optimize the operation of autonomous lawn mowers. Leveraging the latest in Java technology and a robust hexagonal architecture, this system provides an API that allows for precise control and scheduling of mowing tasks. Users can define the mowing area through intuitive terrain dimensions and set detailed instructions for each mower's path and actions. The application ensures efficient navigation and obstacle avoidance through advanced instruction processing, enabling mowers to adapt to diverse lawn configurations dynamically. With SmartMowDrive, achieving a perfectly manicured lawn is effortless, efficient, and smart.
+- This project is a solution to the SEAT:CODE Backend Challenge. The goal of this challenge is to develop an application that allows the user to define the mowing area and set detailed instructions for each mower's path and actions. The application must ensure efficient navigation and obstacle avoidance through advanced instruction processing, enabling mowers to adapt to diverse lawn configurations dynamically. The application must also provide a REST API and a CLI for interacting with the system.
+- The instructions and rules of the challenge can be found in the following [link](./readme-resources/docs/mobility_SEAT_CODE_backend_code_challenge.pdf)
 
 ## Tech Stack
 - IDE: IntelliJ IDEA Community Edition (2023.3)
@@ -14,6 +15,17 @@
 - Lombok: 1.18.30
 - SpringDoc OpenApi: 2.2.0
 - Maven: 3.9.2
+
+## Versions
+### v1.0.0
+- Initial application launch.
+### v1.1.0
+- CLI bug fixes: Fixed the problem that did not correctly display the positions of the mowers when completing the execution of the instructions in the CLI.
+- Improved code documentation: Add versions in README and upgrade correctly the pom.
+- Improved code: Some method refactoring names to improve the readability of the code.
+- Add actuator timed: Add actuator timed to measure the time of the execution of the instructions.
+- Add logs: Add more logs to facilitate the debugging of the application.
+- Add docs: Add pdf with the code challenge description.
 
 ## Prerequisites to test/run the application
 - Java: 21.0.1 - [Download](https://openjdk.org/projects/jdk/21/)
@@ -36,6 +48,8 @@
 - In the domain layer of our architecture, Java Records are utilized to encapsulate the state and behavior of business entities. This choice underscores our commitment to immutability and clarity within our domain logic. Records provide a succinct and expressive approach to defining our models, significantly reducing the boilerplate often associated with traditional Java POJOs. By leveraging records, we ensure that domain objects are thread-safe and maintain a consistent state, facilitating a more reliable and predictable flow of data towards the application layer.
 ### Implementing GlobalExceptionHandler
 - A GlobalExceptionHandler is utilized to handle exceptions at a global level within the application. By propagating domain exceptions to the application layer and centralizing error handling, we eliminate the need for repetitive try/catch blocks in services. This strategy not only simplifies the codebase but also ensures consistent error handling across the application.
+### Use of functional programming
+- Functional programming is used to simplify the code and make it more readable. This approach allows us to focus on the core business logic, resulting in a cleaner and more concise codebase.
 ### Focusing on Clean and Maintainable Code
 - Throughout the development process, a strong emphasis was placed on writing clean, well-documented, and maintainable code. This approach not only makes future modifications and extensions more manageable but also ensures that the application adheres to industry best practices.
 
@@ -68,8 +82,6 @@ spring.profiles.active=cli,rest
 ## To improve
 ### Implementing Database for Data Persistence
 - We plan to integrate an H2 database for persisting data, which will enhance our application's data management capabilities. This improvement is aimed at providing robust data storage and retrieval, facilitating more complex functionalities and user interactions. Additionally, we will focus on implementing comprehensive integration tests to ensure the reliability and stability of the database interactions.
-### Implementing a Logging Framework
-- We plan to integrate a logging framework to provide a more robust and flexible logging solution. This improvement will allow us to log more detailed information, including the stack trace of exceptions, which will be useful for debugging and troubleshooting. Additionally, we will focus on implementing comprehensive integration tests to ensure the reliability and stability of the logging framework. 
 ### Considering Advanced Mapping Solutions
 - As our application evolves, we are open to adopting more powerful mapping tools like MapStruct, particularly if the API expands significantly. For now, Spring's built-in type conversion is sufficient, but we recognize the potential need for a more sophisticated mapping solution as the complexity of data transformations increases. MapStruct would offer greater efficiency and cleaner code for complex mapping scenarios, making it a valuable addition for future scalability.
 ### Emphasizing Continuous Improvement
@@ -95,10 +107,8 @@ mvn spring-boot:run
 ```
 
 ## Validations
-
 > [!IMPORTANT]
 > If the JSON payload is not correct, the application will return a 400 Bad Request specifying the error.
-
 ### Terrain dimensions
 - The terrain dimensions must be a string with two positive integers separated by a space.
 - The first integer represents the width of the terrain.
@@ -106,14 +116,12 @@ mvn spring-boot:run
 ```json
 {"terrainDimensions": "5 5"}
 ```
-
 ### ID
 - The ID must be a string with a valid UUID.
 - The ID must be unique.
 ```json
 {"id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"}
-``` 
-
+```
 ### Starting position
 - The starting position must be a string with three parts separated by a space.
 - The first part represents the starting position of the mower, x and y.
@@ -121,10 +129,8 @@ mvn spring-boot:run
 ```json
 {"startingPosition": "1 2 N"}
 ```
-
 > [!WARNING]
 > If a mower's starting position coincides with the final position of a previously moved mower, the application will return an error.
-
 ### Instructions
 - The instructions must be a string with a combination of the following letters: L|R|M.
 - L: Rotate the mower 90 degrees to the left.
@@ -136,17 +142,12 @@ mvn spring-boot:run
 
 ## Available endpoints
 Since the project uses SpringDoc OpenApi, we can see the available endpoints at the following link:
-
 [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
-
 ### Examples to call the endpoints
 You can use the HTTP client of your choice to call the endpoints. In the next examples I will use Postman to perform the requests.
-
 Using the [import feature of Postman](https://learning.postman.com/docs/getting-started/importing-and-exporting-data/) you can import the OpenAPI definition from the following link: [http://localhost:8080/v3/api-docs](http://localhost:8080/v3/api-docs)
-
 #### Execute the instructions to move a mowers
 - `POST /api/v1/mower/process-instructions`
-
 #### Example with a successful response:
 - Request:
 ```json
@@ -183,7 +184,6 @@ Using the [import feature of Postman](https://learning.postman.com/docs/getting-
   }
 ]
 ```
-
 #### Example with an error response:
 - Request:
 ```json
@@ -231,23 +231,62 @@ Using the [import feature of Postman](https://learning.postman.com/docs/getting-
   }
 ]
 ```
+> [!INFO]
+> You can review the performance of this endpoint in the following link: http://localhost:8080/actuator/metrics/mower.process.instructions
+#### Example of performance metrics:
+- Response:
+```json
+[
+  {
+    "name": "mower.process.instructions",
+    "description": "Time taken to process mower instructions",
+    "baseUnit": "seconds",
+    "measurements": [
+      {
+        "statistic": "COUNT",
+        "value": 2.0
+      },
+      {
+        "statistic": "TOTAL_TIME",
+        "value": 0.025113
+      },
+      {
+        "statistic": "MAX",
+        "value": 0.0224056
+      }
+    ],
+    "availableTags": [
+      {
+        "tag": "exception",
+        "values": [
+          "none"
+        ]
+      },
+      {
+        "tag": "method",
+        "values": [
+          "processInstructions"
+        ]
+      },
+      {
+        "tag": "class",
+        "values": [
+          "com.smartmowdrive.application.rest.MowerController"
+        ]
+      }
+    ]
+  }
+]
+```
 
 ## CLI example
 - The CLI is a simple command line interface that allows you to interact with the application.
 - The CLI is only available when the `cli` profile is active.
-
 ### Screenshots
 - ![Step 1](./readme-resources/img/step1.png)
 - ![Step 2](./readme-resources/img/step2.png)
 - ![Step 3](./readme-resources/img/step3.png)
 - ![Step 4](./readme-resources/img/step4.png)
 - ![Step 5](./readme-resources/img/step5.png)
-
 > [!IMPORTANT]
 > The cli shows a drawing of the terrain and where each mower ends, as well as its orientation.
-
-
-
-
-
-
