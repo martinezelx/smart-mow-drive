@@ -41,7 +41,7 @@ public class TestBuilder {
         return new InstructionsCommands("5 5", mowersInstructions);
     }
 
-    public static InstructionsCommands buildInstructionsCommandsErrors() {
+    public static InstructionsCommands buildInstructionsCommandsWithErrors() {
         MowerInstructions mowerInstructions1 = new MowerInstructions(UUID.fromString("3fa85f64-5717-4562-b3fc-2c963f66afa1"), "1 2 N", "LMLMLMLMM");
         MowerInstructions mowerInstructions2 = new MowerInstructions(UUID.fromString("3fa85f64-5717-4562-b3fc-2c963f66afa2"), "3 3 E", "MMRMMRMRRM");
         MowerInstructions mowerInstructions3 = new MowerInstructions(UUID.fromString("3fa85f64-5717-4562-b3fc-2c963f66afa3"), "1 4 N", "LMLMLMLMM");
@@ -55,7 +55,7 @@ public class TestBuilder {
         return Arrays.asList(mowerFinalPosition1, mowerFinalPosition2);
     }
 
-    public static List<MowerFinalPosition> buildMowerFinalPositionErrors() {
+    public static List<MowerFinalPosition> buildMowerFinalPositionWithErrors() {
         MowerFinalPosition mowerFinalPosition1 = new MowerFinalPosition(1, 3, 'N', "Instructions executed successfully");
         MowerFinalPosition mowerFinalPosition2 = new MowerFinalPosition(5, 1, 'E', "Instructions executed successfully");
         MowerFinalPosition mowerFinalPosition3 = new MowerFinalPosition(0, 3, 'E', "Error executing instructions, the mower has been stopped at the last valid position, see the log for more details");

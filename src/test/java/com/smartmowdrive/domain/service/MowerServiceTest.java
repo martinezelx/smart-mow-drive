@@ -21,7 +21,7 @@ public class MowerServiceTest {
     }
 
     @Test
-    public void executeInstructions_HappyPathWithoutErrors() {
+    public void executeInstructionsReturnsExpectedPositionsWhenValidInstructionsProvided() {
         InstructionsCommands instructionsCommands = TestBuilder.buildInstructionsCommands();
         List<MowerFinalPosition> expected = TestBuilder.buildMowerFinalPosition();
 
@@ -31,9 +31,9 @@ public class MowerServiceTest {
     }
 
     @Test
-    public void executeInstructions_HappyPathWithErrors() {
-        InstructionsCommands instructionsCommands = TestBuilder.buildInstructionsCommandsErrors();
-        List<MowerFinalPosition> expected = TestBuilder.buildMowerFinalPositionErrors();
+    public void executeInstructionsReturnsExpectedPositionsWithErrorsWhenInvalidInstructionsProvided() {
+        InstructionsCommands instructionsCommands = TestBuilder.buildInstructionsCommandsWithErrors();
+        List<MowerFinalPosition> expected = TestBuilder.buildMowerFinalPositionWithErrors();
 
         List<MowerFinalPosition> actual = mowerService.executeInstructions(instructionsCommands);
 
@@ -41,31 +41,31 @@ public class MowerServiceTest {
     }
 
     @Test
-    public void executeInstructions_ThrowsDuplicateMowerPositionException() {
+    public void executeInstructionsThrowsDuplicateMowerPositionExceptionWhenDuplicateMowerPositionProvided() {
         InstructionsCommands instructionsCommands = TestBuilder.buildInstructionsCommandsDuplicateMowerPosition();
         assertThrows(DuplicateMowerPositionException.class, () -> mowerService.executeInstructions(instructionsCommands));
     }
 
     @Test
-    public void executeInstructions_ThrowsInvalidDimensionsException() {
+    public void executeInstructionsThrowsInvalidDimensionsExceptionWhenInvalidDimensionsProvided() {
         InstructionsCommands instructionsCommands = TestBuilder.buildInstructionsCommandsInvalidDimensions();
         assertThrows(InvalidDimensionsException.class, () -> mowerService.executeInstructions(instructionsCommands));
     }
 
     @Test
-    public void executeInstructions_ThrowsDuplicateMowerIdException() {
+    public void executeInstructionsThrowsDuplicateMowerIdExceptionWhenDuplicateMowerIdProvided() {
         InstructionsCommands instructionsCommands = TestBuilder.buildInstructionsCommandsDuplicateMowerId();
         assertThrows(DuplicateMowerIdException.class, () -> mowerService.executeInstructions(instructionsCommands));
     }
 
     @Test
-    public void executeInstructions_ThrowsInvalidPositionException() {
+    public void executeInstructionsThrowsInvalidPositionExceptionWhenInvalidPositionProvided() {
         InstructionsCommands instructionsCommands = TestBuilder.buildInstructionsCommandsInvalidPosition();
         assertThrows(InvalidPositionException.class, () -> mowerService.executeInstructions(instructionsCommands));
     }
 
     @Test
-    public void executeInstructions_ThrowsInvalidInstructionException() {
+    public void executeInstructionsThrowsInvalidInstructionExceptionWhenInvalidInstructionProvided() {
         InstructionsCommands instructionsCommands = TestBuilder.buildInstructionsCommandsInvalidInstruction();
         assertThrows(InvalidInstructionException.class, () -> mowerService.executeInstructions(instructionsCommands));
     }

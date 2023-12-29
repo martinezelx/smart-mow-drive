@@ -26,6 +26,11 @@
 - Add actuator timed: Add actuator timed to measure the time of the execution of the instructions.
 - Add logs: Add more logs to facilitate the debugging of the application.
 - Add docs: Add pdf with the code challenge description.
+### v1.2.0
+- Update Spring Boot to 3.2.1.
+- Update SpringDoc OpenApi to 2.3.0.
+- Improved code: Refactor the tests to improve the readability of the code and add more tests.
+- Improved readme: Fix markdowns.
 
 ## Prerequisites to test/run the application
 - Java: 21.0.1 - [Download](https://openjdk.org/projects/jdk/21/)
@@ -107,7 +112,7 @@ mvn spring-boot:run
 ```
 
 ## Validations
-> [!IMPORTANT]
+> [!WARNING]
 > If the JSON payload is not correct, the application will return a 400 Bad Request specifying the error.
 ### Terrain dimensions
 - The terrain dimensions must be a string with two positive integers separated by a space.
@@ -129,7 +134,7 @@ mvn spring-boot:run
 ```json
 {"startingPosition": "1 2 N"}
 ```
-> [!WARNING]
+> [!CAUTION]
 > If a mower's starting position coincides with the final position of a previously moved mower, the application will return an error.
 ### Instructions
 - The instructions must be a string with a combination of the following letters: L|R|M.
@@ -231,7 +236,7 @@ Using the [import feature of Postman](https://learning.postman.com/docs/getting-
   }
 ]
 ```
-> [!INFO]
+> [!TIP]
 > You can review the performance of this endpoint in the following link: http://localhost:8080/actuator/metrics/mower.process.instructions
 #### Example of performance metrics:
 - Response:
@@ -288,5 +293,5 @@ Using the [import feature of Postman](https://learning.postman.com/docs/getting-
 - ![Step 3](./readme-resources/img/step3.png)
 - ![Step 4](./readme-resources/img/step4.png)
 - ![Step 5](./readme-resources/img/step5.png)
-> [!IMPORTANT]
+> [!NOTE]
 > The cli shows a drawing of the terrain and where each mower ends, as well as its orientation.

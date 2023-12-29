@@ -14,6 +14,7 @@ import org.springframework.core.convert.ConversionFailedException;
 import org.springframework.core.convert.ConversionService;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -36,7 +37,7 @@ public class MowerInstructionsProcessingServiceTest {
     }
 
     @Test
-    public void testProcessInstructionsService() {
+    public void processInstructionsReturnsExpectedPositionsWhenValidInstructionsProvided() {
         InstructionsRequestDTO request = TestBuilder.buildInstructionsRequestDTO();
         InstructionsCommands commands = TestBuilder.buildInstructionsCommands();
         List<MowerFinalPosition> finalPositions = TestBuilder.buildMowerFinalPosition();
@@ -45,9 +46,9 @@ public class MowerInstructionsProcessingServiceTest {
         when(conversionService.convert(request, InstructionsCommands.class)).thenReturn(commands);
         when(mowerService.executeInstructions(commands)).thenReturn(finalPositions);
 
-        for (int i = 0; i < finalPositions.size(); i++) {
-            when(conversionService.convert(finalPositions.get(i), PositionResponseDTO.class)).thenReturn(responseDTO.get(i));
-        }
+        IntStream.range(0, finalPositions.size()).forEach(i ->
+                when(conversionService.convert(finalPositions.get(i), PositionResponseDTO.class)).thenReturn(responseDTO.get(i))
+        );
 
         List<PositionResponseDTO> result = mowerInstructionsProcessingService.processInstructions(request);
 
@@ -55,7 +56,7 @@ public class MowerInstructionsProcessingServiceTest {
     }
 
     @Test
-    public void testProcessInstructionsService_ConversionServiceThrowsException() {
+    public void processInstructionsThrowsConversionFailedExceptionWhenConversionFails() {
         InstructionsRequestDTO request = TestBuilder.buildInstructionsRequestDTO();
 
         when(conversionService.convert(request, InstructionsCommands.class)).thenThrow(new ConversionFailedException(null, null, null, null));
@@ -64,7 +65,7 @@ public class MowerInstructionsProcessingServiceTest {
     }
 
     @Test
-    public void testProcessInstructions_MowerServiceThrowsException() {
+    public void processInstructionsThrowsRuntimeExceptionWhenMowerServiceFails() {
         InstructionsRequestDTO request = TestBuilder.buildInstructionsRequestDTO();
         InstructionsCommands commands = TestBuilder.buildInstructionsCommands();
 
