@@ -7,13 +7,13 @@
 ## Tech Stack
 - IDE: IntelliJ IDEA Community Edition (2023.3)
 - Java: 21.0.1 OpenJDK
-- Spring Boot: 3.2.0
+- Spring Boot: 3.2.1
      - Spring DevTools
      - Spring Web
      - Spring Actuator
      - Spring Validation
 - Lombok: 1.18.30
-- SpringDoc OpenApi: 2.2.0
+- SpringDoc OpenApi: 2.3.0
 - Maven: 3.9.2
 
 ## Versions
@@ -31,6 +31,9 @@
 - Update SpringDoc OpenApi to 2.3.0.
 - Improved code: Refactor the tests to improve the readability of the code and add more tests.
 - Improved readme: Fix markdowns.
+### v1.3.0
+- Update README.
+- Improved code: Refactor the CLI to improve the readability of the code.
 
 ## Prerequisites to test/run the application
 - Java: 21.0.1 - [Download](https://openjdk.org/projects/jdk/21/)
@@ -93,6 +96,8 @@ spring.profiles.active=cli,rest
 - We are committed to continuously improving our application, keeping an eye on emerging technologies and methodologies that could further enhance performance, usability, and maintainability. By staying adaptable and responsive to new challenges, we aim to keep our application at the forefront of technological advancements.
 ### Implementing a CI/CD Pipeline
 - We plan to implement a CI/CD pipeline to automate the build and deployment process. This improvement will allow us to streamline the development process, ensuring that the application is always in a deployable state. Additionally, we will focus on implementing comprehensive integration tests to ensure the reliability and stability of the CI/CD pipeline.
+### Deploying the Application in Cloud Services
+- We plan to deploy the application in cloud services to ensure that the application is always available. This improvement will allow us to have a more reliable and stable application. Additionally, we will focus on implementing comprehensive integration tests to ensure the reliability and stability of the cloud services.
 ### Improve the code
 - We plan to improve the code by refactoring it to follow the best practices and design patterns. This improvement will allow us to have a more maintainable and scalable codebase. Additionally, we will focus on implementing SOLID rules and the application of Domain Drive Design pattern (DDD).
 ### Improve the tests

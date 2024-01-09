@@ -29,72 +29,96 @@ public class MowerCLI implements CommandLineRunner {
 
         while (!exit) {
             try {
-
-                System.out.println("===========================================");
-                System.out.println("|        SMART MOW DRIVE 1.0 - CLI        |");
-                System.out.println("|      SEAT:CODE Technical Challenge      |");
-                System.out.println("|        by Luis M.M. @martinezelx        |");
-                System.out.println("===========================================");
-
-                System.out.println("-------------------------------------------");
-                System.out.println("| Enter terrain dimensions:               |");
-                System.out.println("| Example: '5 5'                          |");
-                System.out.println("-------------------------------------------");
-                String terrainDimensions = scanner.nextLine();
-
-                System.out.println("-------------------------------------------");
-                System.out.println("| How many mowers do you want to operate? |");
-                System.out.println("-------------------------------------------");
-                int numberOfMowers = scanner.nextInt();
-                scanner.nextLine();
-
-                List<MowerInstructionsDTO> mowersInstructions = new ArrayList<>();
-
-                for (int i = 0; i < numberOfMowers; i++) {
-                    System.out.println("---------------------------------------------------");
-                    System.out.println("| Enter mower " + (i + 1) + " ID:");
-                    System.out.println("| Example: '3fa85f64-5717-4562-b3fc-2c963f66afa6'");
-                    System.out.println("---------------------------------------------------");
-                    String id = scanner.nextLine();
-
-                    System.out.println("-------------------------------------------------");
-                    System.out.println("| Enter mower " + (i + 1) + " initial position:");
-                    System.out.println("| Example: '1 2 N'");
-                    System.out.println("-------------------------------------------------");
-                    String mowerPosition = scanner.nextLine();
-
-                    System.out.println("---------------------------------------------");
-                    System.out.println("| Enter mower " + (i + 1) + " instructions:");
-                    System.out.println("| Example: 'LMLMLMLMM'");
-                    System.out.println("---------------------------------------------");
-                    String instructions = scanner.nextLine();
-
-                    mowersInstructions.add(new MowerInstructionsDTO(UUID.fromString(id), mowerPosition, instructions));
-                }
+                printWelcomeMessage();
+                String terrainDimensions = getTerrainDimensions(scanner);
+                int numberOfMowers = getNumberOfMowers(scanner);
+                List<MowerInstructionsDTO> mowersInstructions = getMowersInstructions(scanner, numberOfMowers);
 
                 InstructionsRequestDTO request = new InstructionsRequestDTO(terrainDimensions, mowersInstructions);
                 var mowersFinalPositions = mowerInstructionsProcessingService.processInstructions(request);
 
-                System.out.println("================================================================================");
-                System.out.println("| Mowers data:");
-                mowersFinalPositions.forEach(mower -> System.out.println("| " + mower + " |"));
-                System.out.println("================================================================================");
-
-                System.out.println("--------------------------------------------------------------------------------");
-
+                printMowersData(mowersFinalPositions);
                 drawInstructions(terrainDimensions, mowersFinalPositions);
 
-                System.out.println("Do you want to exit? (yes/no)");
-                String exitResponse = scanner.nextLine();
-                exit = "yes".equalsIgnoreCase(exitResponse);
+                exit = getExitResponse(scanner);
 
-            } catch (Exception e) {
+            } catch (IllegalArgumentException e) {
                 System.out.println("An error occurred: " + e.getMessage());
-                System.out.println("Do you want to continue? (yes/no)");
-                String continueResponse = scanner.nextLine();
-                exit = !"yes".equalsIgnoreCase(continueResponse);
+                exit = !getContinueResponse(scanner);
             }
         }
+    }
+
+    private void printWelcomeMessage() {
+        System.out.println("===========================================");
+        System.out.println("|       SMART MOW DRIVE 1.3.0 - CLI       |");
+        System.out.println("|      SEAT:CODE Technical Challenge      |");
+        System.out.println("|        by Luis M.M. @martinezelx        |");
+        System.out.println("===========================================");
+    }
+
+    private String getTerrainDimensions(Scanner scanner) {
+        System.out.println("-------------------------------------------");
+        System.out.println("| Enter terrain dimensions:               |");
+        System.out.println("| Example: '5 5'                          |");
+        System.out.println("-------------------------------------------");
+        return scanner.nextLine();
+    }
+
+    private int getNumberOfMowers(Scanner scanner) {
+        System.out.println("-------------------------------------------");
+        System.out.println("| How many mowers do you want to operate? |");
+        System.out.println("-------------------------------------------");
+        int numberOfMowers = scanner.nextInt();
+        scanner.nextLine();
+        return numberOfMowers;
+    }
+
+    private List<MowerInstructionsDTO> getMowersInstructions(Scanner scanner, int numberOfMowers) {
+        List<MowerInstructionsDTO> mowersInstructions = new ArrayList<>();
+
+        for (int i = 0; i < numberOfMowers; i++) {
+            System.out.println("---------------------------------------------------");
+            System.out.println("| Enter mower " + (i + 1) + " ID:");
+            System.out.println("| Example: '3fa85f64-5717-4562-b3fc-2c963f66afa6'");
+            System.out.println("---------------------------------------------------");
+            String id = scanner.nextLine();
+
+            System.out.println("-------------------------------------------------");
+            System.out.println("| Enter mower " + (i + 1) + " initial position:");
+            System.out.println("| Example: '1 2 N'");
+            System.out.println("-------------------------------------------------");
+            String mowerPosition = scanner.nextLine();
+
+            System.out.println("---------------------------------------------");
+            System.out.println("| Enter mower " + (i + 1) + " instructions:");
+            System.out.println("| Example: 'LMLMLMLMM'");
+            System.out.println("---------------------------------------------");
+            String instructions = scanner.nextLine();
+
+            mowersInstructions.add(new MowerInstructionsDTO(UUID.fromString(id), mowerPosition, instructions));
+        }
+
+        return mowersInstructions;
+    }
+
+    private void printMowersData(List<PositionResponseDTO> mowersFinalPositions) {
+        System.out.println("================================================================================");
+        System.out.println("| Mowers data:");
+        mowersFinalPositions.forEach(mower -> System.out.println("| " + mower + " |"));
+        System.out.println("================================================================================");
+    }
+
+    private boolean getExitResponse(Scanner scanner) {
+        System.out.println("Do you want to exit? (yes/no)");
+        String exitResponse = scanner.nextLine();
+        return "yes".equalsIgnoreCase(exitResponse);
+    }
+
+    private boolean getContinueResponse(Scanner scanner) {
+        System.out.println("Do you want to continue? (yes/no)");
+        String continueResponse = scanner.nextLine();
+        return "yes".equalsIgnoreCase(continueResponse);
     }
 
     private void drawInstructions(String terrainDimensions, List<PositionResponseDTO> mowersFinalPositions) {

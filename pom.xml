@@ -13,7 +13,7 @@
 
     <groupId>com.smartmowdrive</groupId>
     <artifactId>smart-mow-drive</artifactId>
-    <version>1.2.0</version>
+    <version>1.3.0</version>
     <name>smart-mow-drive</name>
     <description>SmartMowDrive is an advanced Java-based application that automates and optimizes
         autonomous lawn mowers through a precise control API and efficient navigation system.</description>
