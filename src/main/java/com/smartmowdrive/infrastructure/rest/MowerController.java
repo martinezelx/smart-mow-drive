@@ -1,8 +1,8 @@
-package com.smartmowdrive.application.rest;
+package com.smartmowdrive.infrastructure.rest;
 
-import com.smartmowdrive.application.dto.InstructionsRequestDTO;
-import com.smartmowdrive.application.dto.PositionResponseDTO;
-import com.smartmowdrive.application.service.MowerInstructionsProcessingService;
+import com.smartmowdrive.application.MowerInstructionsProcessingService;
+import com.smartmowdrive.infrastructure.rest.dto.InstructionsRequestDTO;
+import com.smartmowdrive.infrastructure.rest.dto.PositionResponseDTO;
 import io.micrometer.core.annotation.Timed;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;

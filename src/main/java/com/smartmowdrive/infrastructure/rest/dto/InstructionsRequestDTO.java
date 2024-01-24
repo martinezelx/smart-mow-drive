@@ -1,4 +1,4 @@
-package com.smartmowdrive.application.dto;
+package com.smartmowdrive.infrastructure.rest.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.Valid;

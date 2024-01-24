@@ -1,4 +1,4 @@
-package com.smartmowdrive.application.dto;
+package com.smartmowdrive.infrastructure.rest.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

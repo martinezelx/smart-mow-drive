@@ -1,6 +1,6 @@
-package com.smartmowdrive.application.converter;
+package com.smartmowdrive.infrastructure.rest.converter;
 
-import com.smartmowdrive.application.dto.MowerInstructionsDTO;
+import com.smartmowdrive.infrastructure.rest.dto.MowerInstructionsDTO;
 import com.smartmowdrive.domain.model.MowerInstructions;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;

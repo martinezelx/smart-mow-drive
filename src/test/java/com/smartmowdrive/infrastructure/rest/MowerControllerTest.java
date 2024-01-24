@@ -1,8 +1,8 @@
-package com.smartmowdrive.application.rest;
+package com.smartmowdrive.infrastructure.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.smartmowdrive.application.dto.InstructionsRequestDTO;
-import com.smartmowdrive.application.service.MowerInstructionsProcessingService;
+import com.smartmowdrive.application.MowerInstructionsProcessingService;
+import com.smartmowdrive.infrastructure.rest.dto.InstructionsRequestDTO;
 import com.smartmowdrive.domain.constants.ErrorMessages;
 import com.smartmowdrive.domain.exception.*;
 import com.smartmowdrive.utils.TestBuilder;

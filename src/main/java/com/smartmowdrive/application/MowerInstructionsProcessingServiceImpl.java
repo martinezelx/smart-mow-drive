@@ -1,7 +1,7 @@
-package com.smartmowdrive.application.service;
+package com.smartmowdrive.application;
 
-import com.smartmowdrive.application.dto.InstructionsRequestDTO;
-import com.smartmowdrive.application.dto.PositionResponseDTO;
+import com.smartmowdrive.infrastructure.rest.dto.InstructionsRequestDTO;
+import com.smartmowdrive.infrastructure.rest.dto.PositionResponseDTO;
 import com.smartmowdrive.domain.model.InstructionsCommands;
 import com.smartmowdrive.domain.service.MowerService;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 @Service
-public class MowerInstructionsProcessingService {
+public class MowerInstructionsProcessingServiceImpl implements MowerInstructionsProcessingService {
 
     private final MowerService mowerService;
     private final ConversionService conversionService;

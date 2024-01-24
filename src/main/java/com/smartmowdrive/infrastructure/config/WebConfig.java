@@ -1,8 +1,8 @@
 package com.smartmowdrive.infrastructure.config;
 
-import com.smartmowdrive.application.converter.InstructionsRequestDTOToInstructionsCommandsConverter;
-import com.smartmowdrive.application.converter.MowerFinalPositionToPositionResponseDTOConverter;
-import com.smartmowdrive.application.converter.MowerInstructionsDTOToMowerInstructionsConverter;
+import com.smartmowdrive.infrastructure.rest.converter.InstructionsRequestDTOToInstructionsCommandsConverter;
+import com.smartmowdrive.infrastructure.rest.converter.MowerFinalPositionToPositionResponseDTOConverter;
+import com.smartmowdrive.infrastructure.rest.converter.MowerInstructionsDTOToMowerInstructionsConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;

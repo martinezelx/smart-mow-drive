@@ -34,6 +34,10 @@
 ### v1.3.0
 - Update README.
 - Improved code: Refactor the CLI to improve the readability of the code.
+### v1.4.0
+- Restructure the architecture to fix the hexagonal architecture.
+- Add GitHub Actions to run the tests and build the application.
+- Refactor some naming to improve the readability of the code.
 
 ## Prerequisites to test/run the application
 - Java: 21.0.1 - [Download](https://openjdk.org/projects/jdk/21/)
@@ -44,8 +48,8 @@
 - We opted for a Hexagonal Architecture to clearly separate the core business logic from the infrastructure layer. This approach enhances maintainability and scalability, allowing independent evolution of the business logic and external components.
 ### Choosing Java 21
 - Java 21, being the latest Long-Term Support (LTS) version, was selected as the programming language for this project. This choice allows us to leverage the newest features and improvements in the Java language, ensuring modern practices and efficient performance.
-### Choosing Spring Boot 3.2.0
-- Spring Boot 3.2.0 was chosen for its extensive set of features that significantly simplify the development and deployment of web applications. Its auto-configuration capabilities, along with a wide array of starter kits, allow for rapid development and easy integration of various components. Spring Boot 3.2.0 also aligns well with our use of Java 21, supporting and enhancing the latest features of the language.
+### Choosing Spring Boot 3.2.1
+- Spring Boot 3.2.1 was chosen for its extensive set of features that significantly simplify the development and deployment of web applications. Its auto-configuration capabilities, along with a wide array of starter kits, allow for rapid development and easy integration of various components. Spring Boot 3.2.0 also aligns well with our use of Java 21, supporting and enhancing the latest features of the language.
 ### Using Lombok to Reduce Boilerplate
 - Lombok was used to reduce boilerplate code and improve the readability of the application. By eliminating the need for repetitive code, Lombok allows developers to focus on the core business logic, resulting in a cleaner and more concise codebase.
 ### Using SpringDoc OpenApi to Document the API

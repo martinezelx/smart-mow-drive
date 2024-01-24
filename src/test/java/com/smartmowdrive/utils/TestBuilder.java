@@ -1,8 +1,8 @@
 package com.smartmowdrive.utils;
 
-import com.smartmowdrive.application.dto.InstructionsRequestDTO;
-import com.smartmowdrive.application.dto.MowerInstructionsDTO;
-import com.smartmowdrive.application.dto.PositionResponseDTO;
+import com.smartmowdrive.infrastructure.rest.dto.InstructionsRequestDTO;
+import com.smartmowdrive.infrastructure.rest.dto.MowerInstructionsDTO;
+import com.smartmowdrive.infrastructure.rest.dto.PositionResponseDTO;
 import com.smartmowdrive.domain.model.InstructionsCommands;
 import com.smartmowdrive.domain.model.MowerFinalPosition;
 import com.smartmowdrive.domain.model.MowerInstructions;

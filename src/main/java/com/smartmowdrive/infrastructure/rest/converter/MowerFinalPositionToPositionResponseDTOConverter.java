@@ -1,6 +1,6 @@
-package com.smartmowdrive.application.converter;
+package com.smartmowdrive.infrastructure.rest.converter;
 
-import com.smartmowdrive.application.dto.PositionResponseDTO;
+import com.smartmowdrive.infrastructure.rest.dto.PositionResponseDTO;
 import com.smartmowdrive.domain.model.MowerFinalPosition;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;

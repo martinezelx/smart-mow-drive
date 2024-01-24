@@ -1,7 +1,7 @@
-package com.smartmowdrive.application.service;
+package com.smartmowdrive.application;
 
-import com.smartmowdrive.application.dto.InstructionsRequestDTO;
-import com.smartmowdrive.application.dto.PositionResponseDTO;
+import com.smartmowdrive.infrastructure.rest.dto.InstructionsRequestDTO;
+import com.smartmowdrive.infrastructure.rest.dto.PositionResponseDTO;
 import com.smartmowdrive.domain.model.InstructionsCommands;
 import com.smartmowdrive.domain.model.MowerFinalPosition;
 import com.smartmowdrive.domain.service.MowerService;
@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
-public class MowerInstructionsProcessingServiceTest {
+public class MowerInstructionsProcessingServiceImplTest {
 
     @Mock
     private MowerService mowerService;
@@ -28,12 +28,12 @@ public class MowerInstructionsProcessingServiceTest {
     @Mock
     private ConversionService conversionService;
 
-    private MowerInstructionsProcessingService mowerInstructionsProcessingService;
+    private MowerInstructionsProcessingServiceImpl mowerInstructionsProcessingServiceImpl;
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
-        mowerInstructionsProcessingService = new MowerInstructionsProcessingService(mowerService, conversionService);
+        mowerInstructionsProcessingServiceImpl = new MowerInstructionsProcessingServiceImpl(mowerService, conversionService);
     }
 
     @Test
@@ -50,7 +50,7 @@ public class MowerInstructionsProcessingServiceTest {
                 when(conversionService.convert(finalPositions.get(i), PositionResponseDTO.class)).thenReturn(responseDTO.get(i))
         );
 
-        List<PositionResponseDTO> result = mowerInstructionsProcessingService.processInstructions(request);
+        List<PositionResponseDTO> result = mowerInstructionsProcessingServiceImpl.processInstructions(request);
 
         assertEquals(responseDTO, result);
     }
@@ -61,7 +61,7 @@ public class MowerInstructionsProcessingServiceTest {
 
         when(conversionService.convert(request, InstructionsCommands.class)).thenThrow(new ConversionFailedException(null, null, null, null));
 
-        assertThrows(ConversionFailedException.class, () -> mowerInstructionsProcessingService.processInstructions(request));
+        assertThrows(ConversionFailedException.class, () -> mowerInstructionsProcessingServiceImpl.processInstructions(request));
     }
 
     @Test
@@ -72,6 +72,6 @@ public class MowerInstructionsProcessingServiceTest {
         when(conversionService.convert(request, InstructionsCommands.class)).thenReturn(commands);
         when(mowerService.executeInstructions(commands)).thenThrow(new RuntimeException());
 
-        assertThrows(RuntimeException.class, () -> mowerInstructionsProcessingService.processInstructions(request));
+        assertThrows(RuntimeException.class, () -> mowerInstructionsProcessingServiceImpl.processInstructions(request));
     }
 }

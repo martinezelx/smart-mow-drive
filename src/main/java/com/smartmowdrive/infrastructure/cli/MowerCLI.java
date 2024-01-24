@@ -1,9 +1,9 @@
-package com.smartmowdrive.application.cli;
+package com.smartmowdrive.infrastructure.cli;
 
-import com.smartmowdrive.application.dto.InstructionsRequestDTO;
-import com.smartmowdrive.application.dto.MowerInstructionsDTO;
-import com.smartmowdrive.application.dto.PositionResponseDTO;
-import com.smartmowdrive.application.service.MowerInstructionsProcessingService;
+import com.smartmowdrive.application.MowerInstructionsProcessingService;
+import com.smartmowdrive.infrastructure.rest.dto.InstructionsRequestDTO;
+import com.smartmowdrive.infrastructure.rest.dto.MowerInstructionsDTO;
+import com.smartmowdrive.infrastructure.rest.dto.PositionResponseDTO;
 import com.smartmowdrive.domain.model.Position;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
