@@ -6,9 +6,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.smartmowdrive.application.MowerInstructionsProcessingService;
-import com.smartmowdrive.domain.constants.ErrorMessages;
-import com.smartmowdrive.domain.exception.*;
+import com.smartmowdrive.application.exceptions.*;
+import com.smartmowdrive.application.usecases.ProcessMowerInstructions;
+import com.smartmowdrive.domain.commons.exceptions.InvalidInstructionException;
+import com.smartmowdrive.domain.commons.exceptions.InvalidPositionException;
+import com.smartmowdrive.domain.commons.exceptions.OutOfBoundsException;
+import com.smartmowdrive.domain.commons.utils.ErrorMessages;
 import com.smartmowdrive.infrastructure.rest.dto.InstructionsRequestDTO;
 import com.smartmowdrive.utils.TestBuilder;
 import java.util.List;
@@ -22,16 +25,16 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class MowerControllerTest {
+class MowerControllerTest {
 
   @Autowired private MockMvc mockMvc;
 
   @Autowired private ObjectMapper objectMapper;
 
-  @MockBean private MowerInstructionsProcessingService mowerInstructionsProcessingService;
+  @MockBean private ProcessMowerInstructions processMowerInstructions;
 
   @Test
-  public void shouldReturnOkWhenProcessInstructions() throws Exception {
+  void shouldReturnOkWhenProcessInstructions() throws Exception {
     mockMvc
         .perform(
             post("/api/v1/mower/process-instructions")
@@ -42,10 +45,9 @@ public class MowerControllerTest {
   }
 
   @Test
-  public void shouldReturnBadRequestWhenDuplicateMowerPosition() throws Exception {
+  void shouldReturnBadRequestWhenDuplicateMowerPosition() throws Exception {
     String message = ErrorMessages.DUPLICATE_MOWER_POSITION;
-    when(mowerInstructionsProcessingService.processInstructions(
-            TestBuilder.buildInstructionsRequestDTO()))
+    when(processMowerInstructions.processInstructions(TestBuilder.buildInstructionsRequestDTO()))
         .thenThrow(new DuplicateMowerPositionException(message));
 
     String expectedResponse =
@@ -64,10 +66,9 @@ public class MowerControllerTest {
   }
 
   @Test
-  public void shouldReturnBadRequestWhenDuplicateMowerId() throws Exception {
+  void shouldReturnBadRequestWhenDuplicateMowerId() throws Exception {
     String message = ErrorMessages.DUPLICATE_MOWER_ID;
-    when(mowerInstructionsProcessingService.processInstructions(
-            TestBuilder.buildInstructionsRequestDTO()))
+    when(processMowerInstructions.processInstructions(TestBuilder.buildInstructionsRequestDTO()))
         .thenThrow(new DuplicateMowerIdException(message));
 
     String expectedResponse =
@@ -86,10 +87,9 @@ public class MowerControllerTest {
   }
 
   @Test
-  public void shouldReturnBadRequestWhenOutOfBounds() throws Exception {
+  void shouldReturnBadRequestWhenOutOfBounds() throws Exception {
     String message = ErrorMessages.OUT_OF_BOUNDS;
-    when(mowerInstructionsProcessingService.processInstructions(
-            TestBuilder.buildInstructionsRequestDTO()))
+    when(processMowerInstructions.processInstructions(TestBuilder.buildInstructionsRequestDTO()))
         .thenThrow(new OutOfBoundsException(message));
 
     String expectedResponse =
@@ -108,10 +108,9 @@ public class MowerControllerTest {
   }
 
   @Test
-  public void shouldReturnBadRequestWhenInvalidDimensions() throws Exception {
+  void shouldReturnBadRequestWhenInvalidDimensions() throws Exception {
     String message = ErrorMessages.INVALID_TERRAIN_FORMAT;
-    when(mowerInstructionsProcessingService.processInstructions(
-            TestBuilder.buildInstructionsRequestDTO()))
+    when(processMowerInstructions.processInstructions(TestBuilder.buildInstructionsRequestDTO()))
         .thenThrow(new InvalidDimensionsException(message));
 
     String expectedResponse =
@@ -130,10 +129,9 @@ public class MowerControllerTest {
   }
 
   @Test
-  public void shouldReturnBadRequestWhenInvalidInstructions() throws Exception {
+  void shouldReturnBadRequestWhenInvalidInstructions() throws Exception {
     String message = ErrorMessages.INVALID_INSTRUCTIONS_FORMAT;
-    when(mowerInstructionsProcessingService.processInstructions(
-            TestBuilder.buildInstructionsRequestDTO()))
+    when(processMowerInstructions.processInstructions(TestBuilder.buildInstructionsRequestDTO()))
         .thenThrow(new InvalidInstructionException(message));
 
     String expectedResponse =
@@ -152,10 +150,9 @@ public class MowerControllerTest {
   }
 
   @Test
-  public void shouldReturnBadRequestWhenInvalidPosition() throws Exception {
+  void shouldReturnBadRequestWhenInvalidPosition() throws Exception {
     String message = ErrorMessages.INVALID_POSITION_FORMAT;
-    when(mowerInstructionsProcessingService.processInstructions(
-            TestBuilder.buildInstructionsRequestDTO()))
+    when(processMowerInstructions.processInstructions(TestBuilder.buildInstructionsRequestDTO()))
         .thenThrow(new InvalidPositionException(message));
 
     String expectedResponse =
@@ -174,7 +171,7 @@ public class MowerControllerTest {
   }
 
   @Test
-  public void shouldReturnBadRequestWhenTerrainDimensionsNull() throws Exception {
+  void shouldReturnBadRequestWhenTerrainDimensionsNull() throws Exception {
     InstructionsRequestDTO invalidRequest = TestBuilder.buildInstructionsRequestDTO();
     invalidRequest.setTerrainDimensions(null);
 
@@ -191,7 +188,7 @@ public class MowerControllerTest {
   }
 
   @Test
-  public void shouldReturnBadRequestWhenMowersInstructionsEmpty() throws Exception {
+  void shouldReturnBadRequestWhenMowersInstructionsEmpty() throws Exception {
     InstructionsRequestDTO invalidRequest = TestBuilder.buildInstructionsRequestDTO();
     invalidRequest.setMowersInstructions(List.of());
 
@@ -208,7 +205,7 @@ public class MowerControllerTest {
   }
 
   @Test
-  public void shouldReturnBadRequestWhenInvalidJson() throws Exception {
+  void shouldReturnBadRequestWhenInvalidJson() throws Exception {
     String invalidJson = "{invalidJson}";
 
     mockMvc

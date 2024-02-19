@@ -1,6 +1,6 @@
 package com.smartmowdrive.infrastructure.rest;
 
-import com.smartmowdrive.application.MowerInstructionsProcessingService;
+import com.smartmowdrive.application.usecases.ProcessMowerInstructions;
 import com.smartmowdrive.infrastructure.rest.dto.InstructionsRequestDTO;
 import com.smartmowdrive.infrastructure.rest.dto.PositionResponseDTO;
 import io.micrometer.core.annotation.Timed;
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/mower")
 public class MowerController {
 
-  private final MowerInstructionsProcessingService mowerInstructionsProcessingService;
+  private final ProcessMowerInstructions processMowerInstructions;
 
   @PostMapping("/process-instructions")
   @Operation(
@@ -34,7 +34,7 @@ public class MowerController {
   public ResponseEntity<List<PositionResponseDTO>> processInstructions(
       @Valid @RequestBody InstructionsRequestDTO request) {
     log.info("Processing instructions for request: {}", request);
-    var result = ResponseEntity.ok(mowerInstructionsProcessingService.processInstructions(request));
+    var result = ResponseEntity.ok(processMowerInstructions.processInstructions(request));
     log.info("Finished processing instructions: {}", result);
     return result;
   }

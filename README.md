@@ -47,6 +47,26 @@
 ### Implementing fmt-maven-plugin
 - fmt-maven-plugin was used to enforce a consistent code style across the application. This plugin provides a simple and straightforward way to format the codebase according to google styleguide. When the application is built, the plugin automatically formats the codebase, ensuring that the code adheres to the defined style guide.
 
+## Architecture explanation
+- The project is structured into three main layers, each with a specific role in the application's architecture:
+#### Domain Layer
+The domain layer is at the heart of the application. It defines the essential operations and data structures that represent the business entities. This layer is technology-agnostic and focuses purely on the business domain.
+- **Entities/Models**: Represent the business concepts with their properties and behaviors. In this project, Java Records are used for immutability and clarity.
+- **Commons**: Contains shared domain logic, such as exceptions and utility classes.
+#### Application Layer
+The application layer acts as a mediator between the domain and the infrastructure layers. It orchestrates the flow of data to and from the domain, applying any necessary transformations and ensuring that the business rules are followed.
+- **Converters**: Convert domain models to DTOs, ensuring a clean separation between the internal and external representations of data.
+- **Use Cases**: Define the application's high-level operations, encapsulating the business logic and coordinating the interactions between the domain and infrastructure layers.
+#### Infrastructure Layer
+The infrastructure layer provides implementations for the interfaces defined in the domain layer (ports) and contains all the technology-specific code. This includes data access mechanisms, external service integrations, and configuration.
+- **Configuration**: Contains configuration classes and beans that setup the application's infrastructure.
+- **Exception Handling**: Global exception handling mechanisms that translate domain exceptions into appropriate HTTP responses.
+- **Controllers**: Define the API endpoints and handle incoming HTTP requests, delegating the processing to the application layer.
+- **DTOs**: Used to transfer data between the application layer and external clients or services, decoupling the internal models from external representations.
+
+> [!NOTE]
+> This layered approach ensures a clean separation of concerns, making the application more maintainable, scalable, and adaptable to changes in technology or business requirements.
+
 ## Utilizing Spring Profiles for Flexible Configuration
 - Spring Profiles provide a powerful and flexible way to segregate parts of our application configuration, making them only available in certain environments. In our application, we have leveraged this feature to control the activation of the Command Line Interface (CLI) and the REST API.
 - We have defined two profiles: "cli" and "rest". The "cli" profile activates the CLI part of the application, while the "rest" profile activates the REST API.
@@ -80,8 +100,6 @@ spring.profiles.active=cli,rest
 - As our application evolves, we are open to adopting more powerful mapping tools like MapStruct, particularly if the API expands significantly. For now, Spring's built-in type conversion is sufficient, but we recognize the potential need for a more sophisticated mapping solution as the complexity of data transformations increases. MapStruct would offer greater efficiency and cleaner code for complex mapping scenarios, making it a valuable addition for future scalability.
 ### Emphasizing Continuous Improvement
 - We are committed to continuously improving our application, keeping an eye on emerging technologies and methodologies that could further enhance performance, usability, and maintainability. By staying adaptable and responsive to new challenges, we aim to keep our application at the forefront of technological advancements.
-### Implementing a CI/CD Pipeline
-- We plan to implement a CI/CD pipeline to automate the build and deployment process. This improvement will allow us to streamline the development process, ensuring that the application is always in a deployable state. Additionally, we will focus on implementing comprehensive integration tests to ensure the reliability and stability of the CI/CD pipeline.
 ### Deploying the Application in Cloud Services
 - We plan to deploy the application in cloud services to ensure that the application is always available. This improvement will allow us to have a more reliable and stable application. Additionally, we will focus on implementing comprehensive integration tests to ensure the reliability and stability of the cloud services.
 ### Improve the code
@@ -137,6 +155,9 @@ mvn spring-boot:run
 ```
 
 ## Available endpoints
+> [!IMPORTANT]
+> Support for multiple mowers on a single terrain is available. It's important to note that each mower is aware of the position of the other mowers on the terrain. If a set of instructions would cause a mower to move to a position occupied by another mower, that instruction will be ignored and the mower will remain in its current position. This allows our application to efficiently and safely handle multiple mowers on a single terrain, providing a scalable and flexible solution to the challenge of mower navigation.
+
 Since the project uses SpringDoc OpenApi, we can see the available endpoints at the following link:
 [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
 ### Examples to call the endpoints

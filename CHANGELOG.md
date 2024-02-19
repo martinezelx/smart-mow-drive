@@ -4,16 +4,24 @@ All notable version notes will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [1.5.0] - Unreleased
+## [1.5.0] - 2024/02/20
+
+### Fixed
+- Fix domain and application layers to improve the architecture.
+- Remove WebConfig bean, it is not necessary.
 
 ### Added
 - Add JaCoCo to measure the code coverage.
 - Add fmt-plugin to format the code with the Google Java Style and format the code according to this.
 - Add dependabot to keep the dependencies up to date.
 - Add CHANGELOG.md to keep track of the changes in the application (removed from README.md).
-- 
+- Add architecture documentation to be more clear about this.
+
 ### Changed
 - Update Spring Boot to 3.2.2
+- Refactored the code to improve the readability and maintainability.
+- More SOLID principles applied to the code.
+- Removed the dependency of lombok in the domain layer.
 
 ## [1.4.0] - 2024/01/24
 

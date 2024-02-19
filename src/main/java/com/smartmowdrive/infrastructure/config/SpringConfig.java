@@ -15,7 +15,7 @@ public class SpringConfig {
         .info(
             new Info()
                 .title("SMART Mow Drive API")
-                .version("1.4.0")
+                .version("1.5.0")
                 .description("API for Mobility SEAT:CODE Backend Code Challenge.")
                 .contact(
                     new Contact()
