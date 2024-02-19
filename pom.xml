@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.1</version>
+        <version>3.2.2</version>
         <relativePath/>
     </parent>
 
@@ -22,6 +22,8 @@
         <java.version>21</java.version>
         <lombok.version>1.18.30</lombok.version>
         <openapi.version>2.3.0</openapi.version>
+        <jacoco.version>0.8.11</jacoco.version>
+        <fmt.version>2.22.1</fmt.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <org.projectlombok.version>${lombok.version}</org.projectlombok.version>
@@ -84,25 +86,63 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                <excludes>
-                    <exclude>
-                        <groupId>org.projectlombok</groupId>
-                        <artifactId>lombok</artifactId>
-                    </exclude>
-                </excludes>
-            </configuration>
+                    <excludes>
+                        <!-- Lombok, used for reducing boilerplate code, is only needed at compile-time.
+                        Hence, it's excluded from the final jar.-->
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
             </plugin>
+            <!-- Formats code using google-java-format which follows Google's code styleguide -->
+            <plugin>
+                <groupId>com.spotify.fmt</groupId>
+                <artifactId>fmt-maven-plugin</artifactId>
+                <version>${fmt.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>format</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- JaCoCo Plugin -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco.version}</version>
+                <executions>
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Maven Surefire Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.2.2</version>
                 <configuration>
-                    <!-- Enable dynamic agent loading,
-                    it's used to ensure that Lombok works correctly during the execution of tests. -->
-                    <argLine>-XX:+EnableDynamicAgentLoading</argLine>
+                    <!-- Enables dynamic loading of Java agents at runtime, useful for on-the-fly
+                    diagnostics and monitoring without restarting the application. Use with
+                    caution in production due to potential security and performance implications. -->
+                    <argLine>
+                        ${argLine} -XX:+EnableDynamicAgentLoading
+                    </argLine>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-
 </project>

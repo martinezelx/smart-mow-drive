@@ -12,14 +12,17 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-    private final MowerFinalPositionToPositionResponseDTOConverter mowerFinalPositionToPositionResponseDTOConverter;
-    private final InstructionsRequestDTOToInstructionsCommandsConverter instructionsRequestDTOToInstructionsCommandsConverter;
-    private final MowerInstructionsDTOToMowerInstructionsConverter mowerInstructionsDTOToMowerInstructionsConverter;
+  private final MowerFinalPositionToPositionResponseDTOConverter
+      mowerFinalPositionToPositionResponseDTOConverter;
+  private final InstructionsRequestDTOToInstructionsCommandsConverter
+      instructionsRequestDTOToInstructionsCommandsConverter;
+  private final MowerInstructionsDTOToMowerInstructionsConverter
+      mowerInstructionsDTOToMowerInstructionsConverter;
 
-    @Override
-    public void addFormatters(FormatterRegistry registry) {
-        registry.addConverter(mowerFinalPositionToPositionResponseDTOConverter);
-        registry.addConverter(instructionsRequestDTOToInstructionsCommandsConverter);
-        registry.addConverter(mowerInstructionsDTOToMowerInstructionsConverter);
-    }
+  @Override
+  public void addFormatters(FormatterRegistry registry) {
+    registry.addConverter(mowerFinalPositionToPositionResponseDTOConverter);
+    registry.addConverter(instructionsRequestDTOToInstructionsCommandsConverter);
+    registry.addConverter(mowerInstructionsDTOToMowerInstructionsConverter);
+  }
 }

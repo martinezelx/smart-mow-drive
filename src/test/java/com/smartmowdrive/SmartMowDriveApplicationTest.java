@@ -8,11 +8,10 @@ import org.springframework.context.ApplicationContext;
 @SpringBootTest
 public class SmartMowDriveApplicationTest {
 
-    @Autowired
-    private ApplicationContext applicationContext;
+  @Autowired private ApplicationContext applicationContext;
 
-    @Test
-    public void contextLoads() {
-        assert(applicationContext != null);
-    }
+  @Test
+  public void contextLoads() {
+    assert (applicationContext != null);
+  }
 }

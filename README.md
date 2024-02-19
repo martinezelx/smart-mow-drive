@@ -16,29 +16,6 @@
 - SpringDoc OpenApi: 2.3.0
 - Maven: 3.9.2
 
-## Versions
-### v1.0.0
-- Initial application launch.
-### v1.1.0
-- CLI bug fixes: Fixed the problem that did not correctly display the positions of the mowers when completing the execution of the instructions in the CLI.
-- Improved code documentation: Add versions in README and upgrade correctly the pom.
-- Improved code: Some method refactoring names to improve the readability of the code.
-- Add actuator timed: Add actuator timed to measure the time of the execution of the instructions.
-- Add logs: Add more logs to facilitate the debugging of the application.
-- Add docs: Add pdf with the code challenge description.
-### v1.2.0
-- Update Spring Boot to 3.2.1.
-- Update SpringDoc OpenApi to 2.3.0.
-- Improved code: Refactor the tests to improve the readability of the code and add more tests.
-- Improved readme: Fix markdowns.
-### v1.3.0
-- Update README.
-- Improved code: Refactor the CLI to improve the readability of the code.
-### v1.4.0
-- Restructure the architecture to fix the hexagonal architecture.
-- Add GitHub Actions to run the tests and build the application.
-- Refactor some naming to improve the readability of the code.
-
 ## Prerequisites to test/run the application
 - Java: 21.0.1 - [Download](https://openjdk.org/projects/jdk/21/)
 - Maven: 3.9.2 - [Download](https://maven.apache.org/download.cgi)
@@ -64,6 +41,11 @@
 - Functional programming is used to simplify the code and make it more readable. This approach allows us to focus on the core business logic, resulting in a cleaner and more concise codebase.
 ### Focusing on Clean and Maintainable Code
 - Throughout the development process, a strong emphasis was placed on writing clean, well-documented, and maintainable code. This approach not only makes future modifications and extensions more manageable but also ensures that the application adheres to industry best practices.
+### Implementing JaCoCo for Code Coverage
+- JaCoCo was used to measure the code coverage of the application. This library provides a simple and straightforward way to measure the code coverage of the application. By leveraging the reports provided by JaCoCo, we can easily identify areas of the codebase that are not covered by tests and improve the overall quality of the application.
+- The code coverage report can be found in the following path: `target/site/jacoco/index.html`
+### Implementing fmt-maven-plugin
+- fmt-maven-plugin was used to enforce a consistent code style across the application. This plugin provides a simple and straightforward way to format the codebase according to google styleguide. When the application is built, the plugin automatically formats the codebase, ensuring that the code adheres to the defined style guide.
 
 ## Utilizing Spring Profiles for Flexible Configuration
 - Spring Profiles provide a powerful and flexible way to segregate parts of our application configuration, making them only available in certain environments. In our application, we have leveraged this feature to control the activation of the Command Line Interface (CLI) and the REST API.

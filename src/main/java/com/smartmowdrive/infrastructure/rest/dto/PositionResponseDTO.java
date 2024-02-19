@@ -8,8 +8,8 @@ import lombok.Data;
 @AllArgsConstructor
 @Builder
 public class PositionResponseDTO {
-    private int x;
-    private int y;
-    private char position;
-    private String status;
+  private int x;
+  private int y;
+  private char position;
+  private String status;
 }

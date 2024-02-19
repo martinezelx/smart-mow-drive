@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 public class ApiError {
 
-    private String exception;
-    private HttpStatus status;
-    private String message;
+  private String exception;
+  private HttpStatus status;
+  private String message;
 }
