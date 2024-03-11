@@ -23,7 +23,7 @@
         <lombok.version>1.18.30</lombok.version>
         <openapi.version>2.3.0</openapi.version>
         <jacoco.version>0.8.11</jacoco.version>
-        <fmt.version>2.22.1</fmt.version>
+        <fmt.version>2.23</fmt.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <org.projectlombok.version>${lombok.version}</org.projectlombok.version>
